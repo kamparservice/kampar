@@ -5,5 +5,25 @@
 # Home page
 GET     /                           controllers.Application.index
 
+GET     /items/index              controllers.ItemsController.index
+
+# Items list (look at the default values for pagination parameters)
+GET      /items                   controllers.ItemsController.list(p:Int ?= 0, s:Int ?= 2, f ?= "%")
+
+# Add coffee
+GET      /items/new               controllers.ItemsController.create
+POST     /items                   controllers.ItemsController.save
+
+# Show a item
+GET      /items/:id               controllers.ItemsController.show(id:Long)
+
+# Edit existing item
+GET     /items/edit/:id           controllers.ItemsController.edit(id:Long)
+POST    /items/edit/:id           controllers.ItemsController.update(id:Long)
+
+# Delete a item
+POST    /items/:id/delete         controllers.ItemsController.delete(id:Long)
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
