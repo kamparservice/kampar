@@ -2,6 +2,11 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Auth
+GET     /login                      controllers.Application.login
+POST    /login                      controllers.Application.loginPost
+GET     /openIDCallback             controllers.Application.openIDCallback
+
 # Home page
 GET     /                           controllers.Application.index
 
