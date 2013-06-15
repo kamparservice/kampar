@@ -34,7 +34,9 @@ object Application extends Controller {
       }, {
         case (openid) => AsyncResult {
           val url = OpenID.redirectURL(openid,
-           routes.Application.openIDCallback.absoluteURL())
+           routes.Application.openIDCallback.absoluteURL(),
+           Seq("email" -> "http://schema.openid.net/contact/email",
+               "last" -> "http://axschema.org/namePerson/last"))
           url.map(a => Redirect(a)).
            fallbackTo(Future(Redirect(routes.Application.login)))
         }
@@ -45,7 +47,9 @@ object Application extends Controller {
   def openIDCallback = Action { implicit request =>
     AsyncResult(
       OpenID.verifiedId.map((info: UserInfo) =>
-        Ok(info.id + "\n" + info.attributes)).
+        //Ok(info.id + "\n" + info.attributes)).
+        Ok(views.html.index(
+            info.attributes("last") + "(" + info.attributes("email") + ")さん かんぱるへようこそ！")))
          fallbackTo(Future(Forbidden))
       )
   }
