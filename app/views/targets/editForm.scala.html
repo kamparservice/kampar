@@ -1,0 +1,31 @@
+@(id: ObjectId, targetForm: Form[Target])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+
+    <h1>Edit target</h1>
+    @form(routes.TargetsController.update(id), 'enctype -> "multipart/form-data") {
+
+        <fieldset>
+
+            @inputText(targetForm("title"),  '_label -> "title")
+            @inputFile(targetForm("image"), '_label -> "Target image")
+            @inputText(targetForm("updated"),  '_label -> "updated")
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Save this target" class="btn primary"> or
+            <a href="@routes.TargetsController.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+    @form(routes.TargetsController.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this target" class="btn danger">
+    }
+
+}

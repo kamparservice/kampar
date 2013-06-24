@@ -9,6 +9,7 @@ GET     /openIDCallback             controllers.Application.openIDCallback
 
 # Home page
 GET     /                           controllers.Application.index
+##GET     /list                       controllers.Application.list
 
 GET     /items/index              controllers.ItemsController.index
 
@@ -29,6 +30,29 @@ POST    /items/edit/:id           controllers.ItemsController.update(id:Long)
 # Delete a item
 POST    /items/:id/delete         controllers.ItemsController.delete(id:Long)
 
+
+#Target
+GET      /targets                   controllers.TargetsController.index
+
+# Targets list (look at the default values for pagination parameters)
+GET      /targets/list              controllers.TargetsController.list()
+
+# Add target
+GET      /targets/new               controllers.TargetsController.create
+POST     /targets                   controllers.TargetsController.save
+
+# Show a target
+GET      /targets/:id               controllers.TargetsController.show(id: ObjectId)
+
+# Edit existing target
+GET     /targets/edit/:id           controllers.TargetsController.edit(id: ObjectId)
+POST    /targets/edit/:id           controllers.TargetsController.update(id: ObjectId)
+
+# Delete a target
+POST    /targets/:id/delete         controllers.TargetsController.delete(id: ObjectId)
+
+# Get Image Data
+GET      /targets/image/:id         controllers.TargetsController.image(id: ObjectId)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

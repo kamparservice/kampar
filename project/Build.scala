@@ -19,11 +19,18 @@ object ApplicationBuild extends Build {
     "org.hsqldb" % "hsqldb" % "2.0.0",
     "postgresql" % "postgresql" % "8.4-701.jdbc4",
     "mysql" % "mysql-connector-java" % "5.1.13",
-    "com.chuusai" %% "shapeless" % "1.2.4")
+    "com.chuusai" %% "shapeless" % "1.2.4",
+    "se.radley" %% "play-plugins-salat" % "1.2"
+    )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(defaultScalaSettings: _*).settings(
+    routesImport += "se.radley.plugin.salat.Binders._",
+    templatesImport += "org.bson.types.ObjectId",
+    resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/",
     resolvers += "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
-    EclipseKeys.withSource := true)
+    EclipseKeys.withSource := true,
+    testOptions in Test += Tests.Argument("junitxml", "console")
+  )
 
 }

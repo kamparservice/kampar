@@ -7,12 +7,18 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms.{single, nonEmptyText}
 import scala.concurrent.Future
+import models.Target
+import se.radley.plugin.salat.Binders.ObjectId
 
 
 object Application extends Controller {
 
   def index = Action {
-    Ok(views.html.index("かんぱるやろーよ、はやくやろーよ、たのしいよー、うひょ！"))
+    Ok(views.html.index("かんぱるー！"))
+  }
+
+  def list = Action {
+   Ok(views.html.index("list page"))
   }
 
 

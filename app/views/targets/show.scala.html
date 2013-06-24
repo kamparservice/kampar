@@ -1,0 +1,42 @@
+@(target: Target)
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+
+  <h1>Show Target</h1>
+  @target.image_id
+      <div><img src="/targets/image/@target.image_id"></div>
+  <table>
+  <tbody>
+    <tr>
+      <td>Target id</td>
+      <td>@target.id</td>
+    </tr>
+    <tr>
+      <td>Target title</td>
+      <td>@target.title</td>
+    </tr>
+    <tr>
+      <td>Target image_id</td>
+      <td>@target.image_id</td>
+    </tr>
+    <tr>
+      <td>Updated</td>
+      <td>@target.updated</td>
+    </tr>
+  </tbody>
+  </table>
+
+
+  <div class="actions">
+  <a href="@routes.TargetsController.edit(target.id)" class="btn">Edit</a>
+  or <a href="@routes.TargetsController.list()" class="btn">Cancel</a>
+  </div>
+
+  @form(routes.TargetsController.delete(target.id), 'class -> "topRight") {
+    <input type="submit" value="Delete this target" class="btn danger">
+  }
+
+}
