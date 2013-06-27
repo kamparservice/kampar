@@ -56,3 +56,16 @@ GET      /targets/image/:id         controllers.TargetsController.image(id: Obje
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+#Kampar
+GET      /kampars                   controllers.KamparsController.index
+
+# Targets list (look at the default values for pagination parameters)
+GET      /kampars/list              controllers.KamparsController.list()
+
+#Add kampar
+POST     /kampars/:target_id        controllers.KamparsController.save(target_id: ObjectId)
+
+# Show a kampar
+GET      /kampars/:id               controllers.KamparsController.show(id: ObjectId)
