@@ -7,8 +7,9 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms.{single, nonEmptyText}
 import scala.concurrent.Future
-import models.Target
+import models._
 import se.radley.plugin.salat.Binders.ObjectId
+import java.util.Date
 
 
 object Application extends Controller {
@@ -52,11 +53,13 @@ object Application extends Controller {
 
   def openIDCallback = Action { implicit request =>
     AsyncResult(
-      OpenID.verifiedId.map((info: UserInfo) =>
+      OpenID.verifiedId.map((info: UserInfo) => {
         //Ok(info.id + "\n" + info.attributes)).
+        User.save(User(openid=info.id, username=info.attributes.getOrElse("last",""), email=info.attributes.getOrElse("email",""), updated = Option(new Date())))
         Ok(views.html.index(
-            info.attributes("last") + "(" + info.attributes("email") + ")さん かんぱるへようこそ！")))
+            info.attributes("last") + "(" + info.attributes("email") + ")さん かんぱるへようこそ！"))})
          fallbackTo(Future(Forbidden))
+         
       )
   }
 

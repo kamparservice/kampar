@@ -15,12 +15,14 @@ import mongoContext._
 
 case class User(
   id: ObjectId = new ObjectId,
+  openid: String,
   username: String,
-  password: String,
-  address: Option[Address] = None,
-  added: Date = new Date(),
-  updated: Option[Date] = None,
-  @Key("company_id")company: Option[ObjectId] = None
+  email: String,
+  // password: String,
+  // address: Option[Address] = None,
+  // added: Date = new Date(),
+  updated: Option[Date] = None
+  // @Key("company_id")company: Option[ObjectId] = None
 )
 
 object User extends UserDAO with UserJson
@@ -30,12 +32,12 @@ trait UserDAO extends ModelCompanion[User, ObjectId] {
   val dao = new SalatDAO[User, ObjectId](collection) {}
 
   // Indexes
-  collection.ensureIndex(DBObject("username" -> 1), "user_email", unique = true)
+  collection.ensureIndex(DBObject("username" -> 1), "email", unique = true)
 
   // Queries
   def findOneByUsername(username: String): Option[User] = dao.findOne(MongoDBObject("username" -> username))
-  def findByCountry(country: String) = dao.find(MongoDBObject("address.country" -> country))
-  def authenticate(username: String, password: String): Option[User] = findOne(DBObject("username" -> username, "password" -> password))
+  // def findByCountry(country: String) = dao.find(MongoDBObject("address.country" -> country))
+  // def authenticate(username: String, password: String): Option[User] = findOne(DBObject("username" -> username, "password" -> password))
 }
 
 /**
@@ -47,20 +49,24 @@ trait UserJson {
     def writes(u: User): JsValue = {
       Json.obj(
         "id" -> u.id,
+        "openid" -> u.id,
         "username" -> u.username,
-        "address" -> u.address,
-        "added" -> u.added,
+        "email" -> u.email,
+        // "address" -> u.address,
+        // "added" -> u.added,
         "updated" -> u.updated
       )
     }
   }
   implicit val userJsonRead = (
     (__ \ 'id).read[ObjectId] ~
+    (__ \ 'openid).read[String] ~
     (__ \ 'username).read[String] ~
-    (__ \ 'password).read[String] ~
-    (__ \ 'address).readNullable[Address] ~
-    (__ \ 'added).read[Date] ~
-    (__ \ 'updated).readNullable[Date] ~
-    (__ \ 'company).readNullable[ObjectId]
+    // (__ \ 'password).read[String] ~
+    (__ \ 'email).read[String] ~
+    // (__ \ 'address).readNullable[Address] ~
+    // (__ \ 'added).read[Date] ~
+    (__ \ 'updated).readNullable[Date]
+    // (__ \ 'company).readNullable[ObjectId]
   )(User.apply _)
 }
