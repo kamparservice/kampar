@@ -36,6 +36,7 @@ trait UserDAO extends ModelCompanion[User, ObjectId] {
 
   // Queries
   def findOneByUsername(username: String): Option[User] = dao.findOne(MongoDBObject("username" -> username))
+  def findOneByOpenid(openid: String): Option[User] = dao.findOne(MongoDBObject("openid" -> openid))
   // def findByCountry(country: String) = dao.find(MongoDBObject("address.country" -> country))
   // def authenticate(username: String, password: String): Option[User] = findOne(DBObject("username" -> username, "password" -> password))
 }
