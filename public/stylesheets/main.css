@@ -9,6 +9,10 @@ header h1 {
     font-size: 24px;
 }
 
+header h1 a.logout {
+    float:right;
+}
+
 section#main {
     position: relative;
     padding: 5em 2em;
