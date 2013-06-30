@@ -69,4 +69,8 @@ object Application extends Controller {
       )
   }
 
+  def logout = Action { implicit request =>
+     Redirect(routes.Application.index).withNewSession.flashing(
+      "success" -> "You've been logged out")
+  }
 }
