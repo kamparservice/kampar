@@ -1,0 +1,47 @@
+@(target: Target, kampars: Iterator[Kampar], kamparForm: Form[Kampar])
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+
+  <h1>Show this target kampars</h1>
+  @target.image_id
+      <div><img src="/targets/image/@target.image_id"></div>
+  <table>
+  <tbody>
+    <tr>
+      <td>Target id</td>
+      <td>@target.id</td>
+    </tr>
+    <tr>
+      <td>Target title</td>
+      <td>@target.title</td>
+    </tr>
+    <tr>
+      <td>Updated</td>
+      <td>@target.updated</td>
+    </tr>
+  </tbody>
+  </table>
+
+  <ul>
+    @kampars.map { kampar =>
+      <li>@kampar.user</li>
+    }
+  </ul>
+
+  @form(routes.KamparsController.save(target.id)) {
+      <fieldset>
+
+          @inputText(kamparForm("user"),  '_label -> "your name")
+
+          <input type="submit" value="かんぱる" class="btn primary">
+      </fieldset>
+  }
+
+  <div class="actions">
+  <a href="@routes.KamparsController.list()" class="btn">list</a>
+  </div>
+
+}
