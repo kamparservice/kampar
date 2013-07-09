@@ -1,0 +1,15 @@
+@(targets: Iterator[Target])(implicit flash: Flash)
+
+@main {
+    @flash.get("success").getOrElse("Welcome!")
+    @flash.get("failure").getOrElse("")
+    <ul>
+        @targets.map { target =>
+            <li><a href="@routes.KamparsController.show(target.id)">かんぱる @target.title</a></li>
+        }
+    </ul>
+
+    <div class="actions">
+    <a href="@routes.TargetsController.create" class="btn">new</a>
+    </div>
+}
