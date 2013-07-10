@@ -7,6 +7,9 @@ GET     /login                      controllers.Application.login
 POST    /login                      controllers.Application.loginPost
 GET     /openIDCallback             controllers.Application.openIDCallback
 
+# Logout
+GET     /logout                     controllers.Application.logout
+
 # Home page
 GET     /                           controllers.Application.index
 ##GET     /list                       controllers.Application.list
