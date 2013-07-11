@@ -17,11 +17,13 @@ import java.util.Date
 object Application extends Controller {
 
   def index = Action { implicit request =>
-    session.get("_user_openid").map { _user_openid =>
-      val user = User.findOneByOpenid(_user_openid).get
-      Ok(views.html.index(user.username + "(" + user.email + ")さん かんぱるへようこそ！"))
-    }.getOrElse {
-      Ok(views.html.index("かんぱるー！"))
+    session.get("_user_openid") match { 
+      case Some(x) => {
+        val user = User.findOneByOpenid(x).get
+        Ok(views.html.index(user.username + "(" + user.email + ")さん かんぱるへようこそ！"))
+      }
+      
+      case None => Ok(views.html.index("かんぱるー！"))
     }
   }
 
@@ -69,4 +71,8 @@ object Application extends Controller {
       )
   }
 
+  def logout = Action { implicit request =>
+     Redirect(routes.Application.index).withNewSession.flashing(
+      "success" -> "You've been logged out")
+  }
 }
