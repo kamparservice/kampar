@@ -34,7 +34,7 @@ object KamparsController extends Controller {
     mapping(
       "id" -> ignored(new ObjectId),
       "target_id" -> optional(ignored(new ObjectId)),
-      "user" -> text,
+      "user" -> optional(text),
       "updated" -> optional(date)
     )(Kampar.apply)(Kampar.unapply)
   )
@@ -77,11 +77,16 @@ object KamparsController extends Controller {
     val target = Target.findOneById(target_id).get
     val kampars = Kampar.findAll //TODO 関連するものだけ取るように直す
     kamparForm.bindFromRequest.fold(
-        formWithErrors => NotFound,
+      formWithErrors => NotFound,
 //      formWithErrors => BadRequest(views.html.kampars.show(target,kampars,formWithErrors)), //TODO 直す
       kampar => {
-        Kampar.save(Kampar(target_id=Some(target_id), user = kampar.user, updated = Option(new Date())))
-        Redirect(routes.KamparsController.show(target_id)).flashing("success" -> s"Entity ${kampar.user} has been added")
+        session.get("_user_openid").map { _user_openid =>
+          val user = User.findOneByOpenid(_user_openid).get
+          Kampar.save(Kampar(target_id=Some(target_id), user = Some(user.username), updated = Option(new Date())))
+          Redirect(routes.KamparsController.show(target_id)).flashing("success" -> s"${user.username} has been added")
+        }.getOrElse {
+          Redirect(routes.KamparsController.show(target_id)).flashing("failure" -> s"User has not been added!")
+        }
       }
     )
   }
