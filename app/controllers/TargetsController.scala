@@ -95,7 +95,12 @@ object TargetsController extends Controller {
             Target.save(Target(title = target.title, image_id=image_id, updated = Option(new Date())))
             
             // mail sending
-            //new Mailer("test-subject", "hogehoge@gmail.com", play.Play.configuration.getProperty("email.address.from"), "hogehoge").send()
+            session.get("_user_openid") map { openid => {
+                val user = User.findOneByOpenid(openid).get
+                new Mailer("[KAMPAR]You add Target!!!", user.email, views.html.mail.addTarget.render(user).body).send()
+              }
+            }
+            
             Home.flashing("success" -> s"Entity ${target.title} has been created")
           }
           case None => {
