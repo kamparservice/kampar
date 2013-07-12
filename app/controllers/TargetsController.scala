@@ -15,6 +15,8 @@ import se.radley.plugin._
 import play.api.mvc.MultipartFormData.FilePart
 import play.api.libs.Files.TemporaryFile
 
+//mail sending
+import com.typesafe.plugin._
 
 object TargetsController extends Controller {
 
@@ -91,6 +93,14 @@ object TargetsController extends Controller {
             val image_id = uploadedFile._id
 
             Target.save(Target(title = target.title, image_id=image_id, updated = Option(new Date())))
+            
+            // mail sending
+            session.get("_user_openid") map { openid => {
+                val user = User.findOneByOpenid(openid).get
+                new Mailer("[KAMPAR]You add Target!!!", user.email, views.html.mail.addTarget.render(user).body).send()
+              }
+            }
+            
             Home.flashing("success" -> s"Entity ${target.title} has been created")
           }
           case None => {
