@@ -19,7 +19,7 @@ import org.bson.types.ObjectId
 case class Kampar(
   id: ObjectId = new ObjectId,
   target_id: Option[ObjectId],
-  user: String,
+  user: Option[String],
   updated: Option[Date] = None
 )
 
