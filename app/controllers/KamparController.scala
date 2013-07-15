@@ -2,6 +2,7 @@ package controllers
 
 import java.util.Date
 import com.mongodb.casbah.WriteConcern
+import com.mongodb.casbah.commons.MongoDBObject
 import models._
 import play.api._
 import play.api.Play.current
@@ -62,9 +63,9 @@ object KamparsController extends Controller {
    *
    * @param id Id of the entity to show
    */
-  def show(id: ObjectId) = Action {
-    Target.findOneById(id).map( target => {
-        val kampars = Kampar.findAll //TODO 関連するものだけ取るように直す
+  def show(target_id: ObjectId) = Action {
+    Target.findOneById(target_id).map( target => {
+        val kampars = Kampar.find(MongoDBObject("target_id" -> target_id))
         Ok(views.html.kampars.show(target, kampars, kamparForm))
       }
     ).getOrElse(NotFound)
@@ -75,7 +76,7 @@ object KamparsController extends Controller {
    */
   def save(target_id: ObjectId) = Action { implicit request =>
     val target = Target.findOneById(target_id).get
-    val kampars = Kampar.findAll //TODO 関連するものだけ取るように直す
+    val kampars = Kampar.find(MongoDBObject("target_id" -> target_id))
     kamparForm.bindFromRequest.fold(
       formWithErrors => NotFound,
 //      formWithErrors => BadRequest(views.html.kampars.show(target,kampars,formWithErrors)), //TODO 直す

@@ -71,4 +71,4 @@ GET      /kampars/list              controllers.KamparsController.list()
 POST     /kampars/:target_id        controllers.KamparsController.save(target_id: ObjectId)
 
 # Show a kampar
-GET      /kampars/:id               controllers.KamparsController.show(id: ObjectId)
+GET      /kampars/:target_id        controllers.KamparsController.show(target_id: ObjectId)
