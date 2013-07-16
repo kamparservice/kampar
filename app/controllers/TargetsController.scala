@@ -36,6 +36,7 @@ object TargetsController extends Controller {
     mapping(
       "id" -> ignored(new ObjectId),
       "title" -> text,
+      "price" -> optional(number),
       "image_id" -> optional(ignored(new ObjectId)),
       "updated" -> optional(date)
     )(Target.apply)(Target.unapply)
@@ -92,7 +93,7 @@ object TargetsController extends Controller {
             uploadedFile.save()
             val image_id = uploadedFile._id
 
-            Target.save(Target(title = target.title, image_id=image_id, updated = Option(new Date())))
+            Target.save(Target(title = target.title, price=target.price, image_id=image_id, updated = Option(new Date())))
             
             // mail sending
             session.get("_user_openid") map { openid => {
@@ -104,7 +105,7 @@ object TargetsController extends Controller {
             Home.flashing("success" -> s"Entity ${target.title} has been created")
           }
           case None => {
-            Target.save(Target(title = target.title, image_id=None, updated = Option(new Date())))
+            Target.save(Target(title = target.title, price=None, image_id=None, updated = Option(new Date())))
             Home.flashing("success" -> s"Entity ${target.title} has been created")
           }
         }
@@ -146,14 +147,14 @@ object TargetsController extends Controller {
             uploadedFile.save()
             val image_id = uploadedFile._id
 
-            Target.save(Target(id, title = target.title, image_id=image_id, updated = Option(new Date())))
+            Target.save(Target(id, title = target.title, price = target.price, image_id=image_id, updated = Option(new Date())))
             Home.flashing(
                 "success" -> "The target has been updated",
                 "target_id" -> id.toString()
             )
 
           case None => {
-            Target.save(Target(id, title = target.title, image_id=None, updated = Option(new Date())))
+            Target.save(Target(id, title = target.title, price=None, image_id=None, updated = Option(new Date())))
             Home.flashing("success" -> s"Entity ${target.title} has been updated")
           }
         }
