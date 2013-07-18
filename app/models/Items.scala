@@ -16,7 +16,7 @@ case class Item(
 // Definition of the ITEMS table
 object Items extends Table[Item]("ITEMS") {
 
-  def id = column[Long]("ID", O.PrimaryKey, O AutoInc) // This is the primary key column
+  def id = column[Long]("ID", O.PrimaryKey, O.AutoInc) // This is the primary key column
   def name = column[String]("ITEM_NAME")
   def supID = column[Long]("SUP_ID")
   def price = column[Long]("PRICE")
