@@ -31,7 +31,8 @@ object ApplicationBuild extends Build {
     resolvers += "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/",
     resolvers += "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
     EclipseKeys.withSource := true,
-    testOptions in Test += Tests.Argument("junitxml", "console")
+    testOptions in Test += Tests.Argument("junitxml", "console"),
+    scalacOptions += "-feature"
   )
 
 }

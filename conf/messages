@@ -1,4 +1,4 @@
 # Messages
 
-items.list.title={0,choice,0#No items|1#One item|1<{0,number,integer} items} found
+targets.list.title={0,choice,0#No targets|1#One target|1<{0,number,integer} targets} found
 
