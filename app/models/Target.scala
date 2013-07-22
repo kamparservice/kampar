@@ -19,6 +19,7 @@ import org.bson.types.ObjectId
 case class Target(
   id: ObjectId = new ObjectId,
   title: String,
+  numberOfPositions: Option[Int],
   image_id: Option[ObjectId],
   updated: Option[Date] = None
 )
