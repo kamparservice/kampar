@@ -1,4 +1,4 @@
-@(target: Target, kampars: Iterator[Kampar], kamparForm: Form[Kampar])
+@(target: Target, kampars: Iterator[Kampar], kamparForm: Form[Kampar])(implicit session:Session)
 
 @import helper._
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }

@@ -1,4 +1,4 @@
-@(targets: Iterator[Target])(implicit flash: Flash)
+@(targets: Iterator[Target])(implicit flash: Flash, session:Session)
 
 @main {
     @flash.get("success").getOrElse("Welcome!")

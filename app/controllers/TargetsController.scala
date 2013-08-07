@@ -57,7 +57,7 @@ object TargetsController extends Controller {
    */
   def list() = Action { implicit request =>
     val targets = Target.findAll
-    Ok(views.html.targets.list(targets)(request.flash))
+    Ok(views.html.targets.list(targets)(request.flash, request.session))
   }
 
   /**
@@ -65,17 +65,17 @@ object TargetsController extends Controller {
    *
    * @param id Id of the entity to show
    */
-  def show(id: ObjectId) = Action {
+  def show(id: ObjectId) = Action { implicit request =>
     Target.findOneById(id).map( target =>
-      Ok(views.html.targets.show(target))
+      Ok(views.html.targets.show(target)(request.session))
     ).getOrElse(NotFound)
   }
 
   /**
    * Display the 'new form'.
    */
-  def create = Action {
-      Ok(views.html.targets.createForm(targetForm))
+  def create = Action { implicit request =>
+      Ok(views.html.targets.createForm(targetForm)(request.session))
   }
 
    /**
@@ -94,14 +94,14 @@ object TargetsController extends Controller {
             val image_id = uploadedFile._id
 
             Target.save(Target(title = target.title, numberOfPositions=target.numberOfPositions, image_id=image_id, updated = Option(new Date())))
-            
+
             // mail sending
             session.get("_user_openid") map { openid => {
                 val user = User.findOneByOpenid(openid).get
-                new Mailer("[KAMPAR]You add Target!!!", user.email, views.html.mail.addTarget.render(user).body).send()
+                new Mailer("[KAMPAR]You add Target!!!", user.email, views.html.mail.addTarget.render(user,session).body).send()
               }
             }
-            
+
             Home.flashing("success" -> s"Entity ${target.title} has been created")
           }
           case None => {
