@@ -17,18 +17,18 @@ import java.util.Date
 object Application extends Controller {
 
   def index = Action { implicit request =>
-    session.get("_user_openid") match { 
+    session.get("_user_openid") match {
       case Some(x) => {
         val user = User.findOneByOpenid(x).get
         Ok(views.html.index(user.username + "(" + user.email + ")さん かんぱるへようこそ！"))
       }
-      
+
       case None => Ok(views.html.index("かんぱるー！"))
     }
   }
 
-  def list = Action {
-   Ok(views.html.index("list page"))
+  def list = Action { implicit request =>
+   Ok(views.html.index("list page")).withSession()
   }
 
 
@@ -65,8 +65,7 @@ object Application extends Controller {
       OpenID.verifiedId.map((info: UserInfo) => {
         //Ok(info.id + "\n" + info.attributes)).
         User.save(User(openid=info.id, username=info.attributes.getOrElse("last",""), email=info.attributes.getOrElse("email",""), updated = Option(new Date())))
-        Ok(views.html.index(
-            info.attributes("last") + "(" + info.attributes("email") + ")さん かんぱるへようこそ！")).withSession( session + ("_user_openid" -> info.id))})
+        Redirect(routes.Application.index).withSession( session + ("_user_openid" -> info.id))})
         fallbackTo(Future(Forbidden))
       )
   }

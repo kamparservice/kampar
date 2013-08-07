@@ -55,7 +55,7 @@ object KamparsController extends Controller {
    */
   def list() = Action { implicit request =>
     val targets = Target.findAll
-    Ok(views.html.kampars.list(targets)(request.flash))
+    Ok(views.html.kampars.list(targets)(request.flash, request.session))
   }
 
   /**
@@ -63,10 +63,10 @@ object KamparsController extends Controller {
    *
    * @param id Id of the entity to show
    */
-  def show(target_id: ObjectId) = Action {
+  def show(target_id: ObjectId) = Action { implicit request =>
     Target.findOneById(target_id).map( target => {
         val kampars = Kampar.find(MongoDBObject("target_id" -> target_id))
-        Ok(views.html.kampars.show(target, kampars, kamparForm))
+        Ok(views.html.kampars.show(target, kampars, kamparForm)(request.session))
       }
     ).getOrElse(NotFound)
   }

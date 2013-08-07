@@ -9,7 +9,7 @@ header h1 {
     font-size: 24px;
 }
 
-header h1 a.logout {
+header h1 a.login {
     float:right;
 }
 
@@ -18,7 +18,7 @@ section#main {
     padding: 5em 2em;
     border-bottom: 1px solid #ccc;
     min-height: 600px;
-} 
+}
 
 section#main .topRight {
     position: absolute;
