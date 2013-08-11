@@ -1,9 +1,9 @@
-@(content: Html)
+@(content: Html)(implicit session: Session)
 
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Coffee database</title>
+        <title>かんぱるから！</title>
         <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
     </head>
@@ -12,9 +12,19 @@
         <header class="topbar">
             <h1 class="fill">
                 <a href="@routes.Application.index()">
-                    Play 2.1 kampar application &mdash; Top
+                    TOP
                 </a>
-                <a class="logout" href="@routes.Application.logout()">LOGOUT</a>
+                <a href="@routes.TargetsController.index()">
+                    ターゲット一覧
+                </a>
+                <a href="@routes.KamparsController.index()">
+                    かんぱる一覧
+                </a>
+@if(session.get("_user_openid")) {
+                <a class="login" href="@routes.Application.logout()">LOGOUT</a>
+}else{
+                <a class="login" href="@routes.Application.login()">LOGIN</a>
+}
             </h1>
         </header>
 
