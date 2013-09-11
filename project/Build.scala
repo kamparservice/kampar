@@ -20,7 +20,7 @@ object ApplicationBuild extends Build {
     "postgresql" % "postgresql" % "8.4-701.jdbc4",
     "mysql" % "mysql-connector-java" % "5.1.13",
     "com.chuusai" %% "shapeless" % "1.2.4",
-    "se.radley" %% "play-plugins-salat" % "1.2",
+    "se.radley" %% "play-plugins-salat" % "1.3.0",
     "com.typesafe" %% "play-plugins-mailer" % "2.1.0"
     )
 
