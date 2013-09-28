@@ -64,9 +64,11 @@ object Application extends Controller {
     AsyncResult(
       OpenID.verifiedId.map((info: UserInfo) => {
         //Ok(info.id + "\n" + info.attributes)).
-        User.save(User(openid=info.id, username=info.attributes.getOrElse("last",""), email=info.attributes.getOrElse("email",""), updated = Option(new Date())))
-        Redirect(routes.Application.index).withSession( session + ("_user_openid" -> info.id))})
-        fallbackTo(Future(Forbidden))
+        println(User.findOneByOpenid(info.id))
+        User.findOneByOpenid(info.id).getOrElse(
+          User.save(User(openid=info.id, username=info.attributes.getOrElse("last",""), email=info.attributes.getOrElse("email",""), updated = Option(new Date())))
+        )
+        Redirect(routes.Application.index).withSession( session + ("_user_openid" -> info.id))}).fallbackTo(Future(Forbidden))
       )
   }
 
