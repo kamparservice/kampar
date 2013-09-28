@@ -32,7 +32,9 @@ trait UserDAO extends ModelCompanion[User, ObjectId] {
   val dao = new SalatDAO[User, ObjectId](collection) {}
 
   // Indexes
-  collection.ensureIndex(DBObject("username" -> 1), "email", unique = true)
+  collection.ensureIndex(DBObject("openid" -> 1), "openid", unique = true)
+  collection.ensureIndex(DBObject("username" -> 1), "username", unique = true)
+  collection.ensureIndex(DBObject("email" -> 1), "email", unique = true)
 
   // Queries
   def findOneByUsername(username: String): Option[User] = dao.findOne(MongoDBObject("username" -> username))

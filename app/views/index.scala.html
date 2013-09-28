@@ -9,9 +9,11 @@
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
     </head>
     <body>
-        <h1>@message</h1>
-        <br>
-        <h3><a href="/login">ログインはこちらから</a></h3><br><br>
+@if(session.get("_user_openid")) {
+        <h1>@message</h1><br>
+} else {
+        <h3><a href="/login">ログインはこちらから</a></h3><br>
+}
         <h3><a href="/targets">ターゲット一覧管理画面はこちらから</a></h3><br><br>
         <h3><a href="/kampars">かんぱる一覧はこちらから</a></h3><br><br>
 
