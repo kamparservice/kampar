@@ -94,21 +94,20 @@ object TargetsController extends Controller {
             val image_id = uploadedFile._id
 
             Target.save(Target(title = target.title, numberOfPositions=target.numberOfPositions, image_id=image_id, updated = Option(new Date())))
-
-            // mail sending
-            session.get("_user_openid") map { openid => {
-                val user = User.findOneByOpenid(openid).get
-                new Mailer("[KAMPAR]You add Target!!!", user.email, views.html.mail.addTarget.render(user,session).body).send()
-              }
-            }
-
-            Home.flashing("success" -> s"Entity ${target.title} has been created")
           }
           case None => {
             Target.save(Target(title = target.title, numberOfPositions=None, image_id=None, updated = Option(new Date())))
-            Home.flashing("success" -> s"Entity ${target.title} has been created")
           }
         }
+
+        // mail sending
+        session.get("_user_openid") map { openid => {
+            val user = User.findOneByOpenid(openid).get
+            new Mailer("[KAMPAR]You add Target!!!", user.email, views.html.mail.addTarget.render(user,session).body).send()
+          }
+        }
+
+        Home.flashing("success" -> s"Entity ${target.title} has been created")
       }
     )
   }
