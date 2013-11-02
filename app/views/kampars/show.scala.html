@@ -3,42 +3,151 @@
 @import helper._
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
 
-@main {
+@kampar_main {
 
-  <h1>Show this target kampars</h1>
-  @target.image_id
-      <div><img src="/targets/image/@target.image_id"></div>
-  <table>
-  <tbody>
-    <tr>
-      <td>Target id</td>
-      <td>@target.id</td>
-    </tr>
-    <tr>
-      <td>Target title</td>
-      <td>@target.title</td>
-    </tr>
-    <tr>
-      <td>Updated</td>
-      <td>@target.updated</td>
-    </tr>
-  </tbody>
-  </table>
+        <div class="row-fluid">
+            <div class="span12">
+                    <div class="page-header">
+                        <h1><small></small>@target.title</h1>
+                    </div>
+	            </div>
+        </div>
+        
+        <!-- メッセージ表示 -->
+        <!-- 
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-success">
+                    <strong>かんぱったよ！</strong>ありがとう！
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-error">
+                    ごめんなさい、エラーが起きました。
+                </div>
+            </div>
+        </div>
+        -->
 
-  <ul>
-    @kampars.map { kampar =>
-      <li>@kampar.user</li>
-    }
-  </ul>
+        <div class="row-fluid">
+            <div class="span4">
+                <p class="text-center">
+                    <img src="/targets/image/@target.image_id" width="320" alt="@target.id" class="img-polaroid">
+                </p>
+            </div>
+            <div class="span4">
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <h3>ターゲット情報</h3>
+                        <dl>
+                            <dt>カテゴリ</dt>
+                            <dd>-</dd>
+                            <dt>名称</dt>
+                            <dd>@target.title</dd>
+                            <dt>金額</dt>
+                            <dd>-円</dd>
+                            <dt>コメント</dt>
+                            <dd>-</dd>
+                            <dt>呼びかけ</dt>
+                            <dd>-</dd>
+                        </dl>
+                        <p class="text-right">
+                            <a class="btn" href="#"><i class="icon-pencil"></i> 編集</a>
+                            <a class="btn btn-inverse" href="#"><i class="icon-remove icon-white"></i> 削除</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <h3>＼ かんぱった！ ／ <small>（5人）</small></h3>
+                        <ul class="avatar-list inline">
+                            <li>
+                                <img src=@routes.Assets.at("/sample/images/sample_73x73.png") height="32" width="32" alt="XXXsan">
+                            </li>
+                            <li>
+                                <img src=@routes.Assets.at("/sample/images/sample_73x73.png") height="32" width="32" alt="XXXsan">
+                            </li>
+                            <li>
+                                <img src=@routes.Assets.at("/sample/images/sample_73x73.png") height="32" width="32" alt="XXXsan">
+                            </li>
+                            <li>
+                                <img src=@routes.Assets.at("/sample/images/sample_73x73.png") height="32" width="32" alt="XXXsan">
+                            </li>
+                            <li>
+                                <img src=@routes.Assets.at("/sample/images/sample_73x73.png") height="32" width="32" alt="XXXsan">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="span4">
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <h3>どうする？</h3>
+                        <table class="table">
+                            <tbody>
+                                <tr class="warning">
+                                    <td>1人あたりの負担額（現在）</td>
+                                    <td>504円</td>
+                                </tr>
+                                <tr class="info">
+                                    <td>あなたが協力すると…</td>
+                                    <td>420円</td>
+                                </tr>
+                            </tbody>                                
+                        </table>
+                        <p class="text-right">
+                            <a class="btn btn-large btn-primary" href="#">かんぱる</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <h3>コメント <small>(2件)</small></h3>
+                        <form class="form-inline">
+                            <input type="text" class="input-medium span9" placeholder="どなたでも自由に投稿できます。">
+                            <button type="submit" class="btn">送信</button>
+                        </form>
+                        <ul class="comment-list unstyled">
+                            <li class="comment span12">
+                                <div class="row-fluid">
+                                    <div class="span1">
+                                        <img src=@routes.Assets.at("/sample/images/sample_73x73.png") height="32" width="32" alt="XXXsan">
+                                    </div>
+                                    <div class="span11">
+                                        <p>
+                                            コメントコメントコメント
+                                        </p>
+                                        <p>
+                                            <small>XXXXsan 2013/08/25　16:00</small>
+                                        </p>        
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="comment span12">
+                                <div class="row-fluid">
+                                    <div class="span1">
+                                        <img src=@routes.Assets.at("/sample/images/sample_73x73.png") height="32" width="32" alt="XXXsan">
+                                    </div>
+                                    <div class="span11">
+                                        <p>
+                                            コメントコメントコメント
+                                        </p>
+                                        <p>
+                                            <small>XXXXsan 2013/08/25　16:00</small>
+                                        </p>        
+                                    </div>
+                                </div>
+                            </li>
 
-  @form(routes.KamparsController.save(target.id)) {
-      <fieldset>
-          <input type="submit" value="かんぱる" class="btn primary">
-      </fieldset>
-  }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <div class="actions">
-  <a href="@routes.KamparsController.list()" class="btn">list</a>
-  </div>
+        <hr>
 
 }

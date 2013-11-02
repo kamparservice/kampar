@@ -1,15 +1,63 @@
 @(targets: Iterator[Target])(implicit flash: Flash, session:Session)
 
-@main {
+@kampar_main {
     @flash.get("success").getOrElse("Welcome!")
     @flash.get("failure").getOrElse("")
-    <ul>
-        @targets.map { target =>
-            <li><a href="@routes.KamparsController.show(target.id)">かんぱる @target.title</a></li>
-        }
-    </ul>
 
-    <div class="actions">
-    <a href="@routes.TargetsController.create" class="btn">new</a>
-    </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="well">
+                    <h1>Target</h1>
+                    <p>みんなのほしいものをみつけよう。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#">ブック</a>
+                    </li>
+                    <li>
+                        <a href="#">グルメ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="page-header">
+                    <h2><small>#1</small> ブック</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <ul class="thumbnails">
+                
+                    @targets.map { target =>
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="@routes.KamparsController.show(target.id)">
+                                    <img src="/targets/image/@target.image_id" alt="@target.title">
+                                </a>
+                                <div class="caption">
+                                    <h3>@target.title<small>-円*-人</small></h3>
+                                    <dl>
+                                        <dt>XXXsan</dt>
+                                        <dd>読みやすいコードを書きましょう！（自責の念）</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>  
+
+        <hr>
 }
